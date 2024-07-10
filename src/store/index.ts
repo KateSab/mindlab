@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios from 'axios';
+// import axios from 'axios';
 import { IPost } from '../interfaces/IPost';
 
 export const useBlogStore = defineStore('blogStore', () => {
@@ -10,8 +10,8 @@ export const useBlogStore = defineStore('blogStore', () => {
 
   async function get_all_posts() {
     try {
-      const response = await axios.get(`${BASE_URL}` + '/posts');
-      const data = await response.data;
+      const response = await fetch(`${BASE_URL}` + '/posts');
+      const data = await response.json();
       posts.value = data;
     } catch (error) {
       console.error(error);
@@ -31,5 +31,16 @@ export const useBlogStore = defineStore('blogStore', () => {
     }
   }
 
-  return { posts, get_all_posts, get_post }
+  async function delete_post(id: number) {
+    try {
+      await fetch(`${BASE_URL}` + `/posts/${id}`, {
+        method: 'DELETE',
+      });
+      get_all_posts();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return { posts, get_all_posts, get_post, delete_post }
 })

@@ -3,11 +3,25 @@
     <div class="post-header">
       <div class="post-author">
         <img class="avatar" :src="`https://i.pravatar.cc/150?u=${post.userId}`" alt="Avatar" />
-        <p>user: id{{ post.userId }}</p>
+        <p style="font-weight: 500;">user: {{ post.userId }}</p>
       </div>
       <div class="post-actions">
-        <CaTrashCan class="icon" style="color: darkred;"/>
         <ByEdit class="icon"/>
+        <CaTrashCan 
+          @click="showModal = true" 
+          @confirm="confirmDeletion" 
+          @close="showModal = false"
+          class="icon" 
+          style="color: red;"/>
+
+        <Teleport to="body">
+          <!-- use the modal component, pass in the prop -->
+          <ModalConfirm :show="showModal" @close="showModal = false">
+            <template #header>
+              <h3>Подтвердите удаление поста №{{ post.id }}</h3>
+            </template>
+          </ModalConfirm>
+        </Teleport>
       </div>
     </div>
     <div class="post-title">
@@ -20,9 +34,16 @@
 </template>
 
 <script setup>
+import ModalConfirm from './ModalConfirm.vue'
 import { defineProps } from 'vue';
+import { useBlogStore } from '../store/index'
 import { CaTrashCan } from '@kalimahapps/vue-icons';
 import { ByEdit } from '@kalimahapps/vue-icons';
+
+import { ref } from 'vue'
+
+const showModal = ref(false)
+
 // Определение пропсов, которые принимает компонент
 const props = defineProps({
   post: {
@@ -30,16 +51,20 @@ const props = defineProps({
     required: true
   }
 });
+
+const confirmDeletion = () => {
+  showModal.value = false;
+  postsStore.
+};
 </script>
 
 <style scoped>
-.icon {
-  background-color: #1d1d1d;
-  cursor: pointer;
-  font-size: 1em;
-  padding: 0.5em;
-  margin: 0.2em;
-  border: #1d1d1d 1px solid;
-  border-radius: 8px;
+.modal {
+  position: fixed;
+  z-index: 999;
+  top: 20%;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
 }
 </style>

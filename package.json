@@ -6,15 +6,28 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "lint": "eslint src",
+    "fix-lint": "eslint src --fix",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.29"
+    "@kalimahapps/vue-icons": "^1.7.1",
+    "@types/axios": "^0.14.0",
+    "axios": "^1.7.2",
+    "pinia": "^2.1.7",
+    "sass": "^1.77.6",
+    "vue": "^3.4.29",
+    "vue-axios": "^3.5.2",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
+    "@types/node": "^20.14.10",
     "@vitejs/plugin-vue": "^5.0.5",
+    "eslint": "^9.6.0",
+    "eslint-plugin-vue": "^9.27.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
+    "vite-tsconfig-paths": "^4.3.2",
     "vue-tsc": "^2.0.21"
   }
 }

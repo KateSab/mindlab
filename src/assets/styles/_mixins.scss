@@ -1,0 +1,36 @@
+@import "./_variables.scss";
+
+@mixin font-header {
+  font-family: "Raleway", sans-serif;
+  color: $font-color-white;
+  font-weight: 700;
+  font-size: 4em;
+  line-height: 1.1;
+}
+
+@mixin font-title {
+  font-family: "Raleway", sans-serif;
+  color: $font-color-white;
+  font-weight: 500;
+  font-size: 2em;
+  line-height: 1.1;
+}
+
+@mixin font-body {
+  font-family: "Montserrat", sans-serif;
+  color: $font-color-white;
+  font-weight: 300;
+  font-size: 1.1em;
+  line-height: 1.2;
+}
+
+@mixin column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@mixin row {
+  display: flex;
+  flex-direction: row;
+}

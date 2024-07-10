@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <h1>Лучше, чем twitter</h1>
+    <h1>Your favourite blog</h1>
   </div>
   <div class="posts">
     <div>
@@ -18,7 +18,6 @@ const postsStore = useBlogStore();
 
 onMounted(() => {
   postsStore.get_all_posts();
-
   console.log(postsStore.posts);
 })
 </script>
