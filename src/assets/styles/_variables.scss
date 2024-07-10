@@ -6,11 +6,17 @@ $color-accent-blue: cyan;
 $color-accent-violet: rebeccapurple;
 $color-accent-pink: deeppink;
 
-$border-pink: $color-accent-pink 1px solid;
-$border-blue: $color-accent-blue 1px solid;
+$border-grey: 1px solid $bg-color;
+$border-pink: 1px solid $color-accent-pink;
+$border-blue: 1px solid $color-accent-blue;
 
 $shadow-pink: 0 0 .7em .3em rgba(255, 20, 145, 0.383);
 $shadow-blue: 0 0 .7em .3em rgba(0, 255, 255, 0.383);
 
 $font-color-white: #fbfbfb;
 $font-color-grey: #bdbdbd;
+
+$spacing: 1em;
+$border-radius: 8px;
+
+$icon-size: 1.5em;

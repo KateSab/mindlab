@@ -3,9 +3,6 @@
 @import "./assets/styles/_mixins.scss";
 
 :root {
-  // font-family: "Concert One", sans-serif;
-  // line-height: 1.5;
-  // font-weight: 400;
   @include font-body;
 
   color-scheme: light dark;
@@ -17,16 +14,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-// a {
-//   font-weight: 500;
-//   color: #646cff;
-//   text-decoration: inherit;
-// }
-
-// a:hover {
-//   color: #535bf2;
-// }
 
 body {
   margin: 0;
@@ -50,27 +37,6 @@ p {
   @include font-body;
 }
 
-// button {
-//   border-radius: 8px;
-//   border: 1px solid transparent;
-//   padding: 0.6em 1.2em;
-//   font-size: 1em;
-//   font-weight: 500;
-//   font-family: inherit;
-//   background-color: #1a1a1a;
-//   cursor: pointer;
-//   transition: border-color 0.25s;
-// }
-
-// button:hover {
-//   border-color: #646cff;
-// }
-
-// button:focus,
-// button:focus-visible {
-//   outline: 4px auto -webkit-focus-ring-color;
-// }
-
 header .top {
   width: 100vw;
   height: 7vh;
@@ -80,6 +46,13 @@ header .top {
   left: 0;
   background-color: $bg-color;
   z-index: 10;
+}
+
+button {
+  margin: 1em;
+  border-radius: 8px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
 
 .main-content {
@@ -93,33 +66,76 @@ header .top {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: 30vh;
     background: linear-gradient(141deg, $color-accent-blue 0%, $color-accent-violet 40%, $color-accent-pink 90%);
   }
 }
 
+.add-post {
+  @include column;
+  width: 100%;
+
+  button {
+    @include row;
+    cursor: pointer;
+    align-items: center;
+    margin-top: 5vh;
+    padding: 1em 2.5em;
+    width: 27vw;
+    height: 10vh;
+    color: $bg-color-grey;
+    background-color: rgba(0, 229, 229, 0.884);
+    border: $border-blue;
+    border-radius: 8px;
+
+    &:hover {
+      box-shadow: $shadow-blue;
+    }
+  }
+
+  h2 {
+    color: $bg-color-grey;
+    margin-left: 2vw;
+  }
+}
+
 .posts {
   @include column;
   width: 70vw;
-  margin-top: 5vh;
   box-sizing: border-box;
   padding: 0 5vw;
 }
 
 .post-wrapper {
-  margin: 15vh 5vw;
+  margin: 5vh 5vw 10vh 5vw;
   border: $border-blue;
   border-radius: 8px;
   background-color: $bg-color-grey;
-  box-shadow: $shadow-blue;
 
   .post-title {
     margin: 0 2vw;
+
+    input {
+      border: $border-blue;
+      color: $font-color-white;
+      line-height: 1em;
+      font-size: 1em;
+      font-weight: 500;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 2vh 2vw;
+      border-radius: 8px;
+    }
   }
 
   .post-body {
     margin: 2vh 4vw;
+  }
+
+  &:hover {
+    box-shadow: $shadow-blue;
   }
 }
 
@@ -128,7 +144,6 @@ header .top {
 .post-actions {
   @include row;
   justify-content: space-between;
-  // align-items: flex-start;
 }
 
 .post-author,
@@ -143,42 +158,66 @@ header .top {
   margin: 1em;
 }
 
-.icon {
+.icon,
+.icon-confirm {
   background-color: $bg-color;
-  cursor: pointer;
-  font-size: 1em;
-  padding: 0.5em;
-  margin: 0.4em;
-  border: $bg-color 1px solid;
-  border-radius: 8px;
+  @include modal-icon;
+
+  &:hover {
+    border: $border-pink;
+  }
 }
 
-.icon:hover {
+.icon-confirm {
+  color: $bg-color-grey;
+  background-color: $color-accent-blue;
+
+  &:hover {
+    border: $border-blue;
+  }
+}
+
+.icon-submit,
+.icon-close {
+  color: $bg-color;
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.icon-submit {
+  @include modal-icon;
+  background-color: $color-accent-blue;
+
+  &:hover {
+    border: $border-blue;
+  }
+}
+
+.icon-close {
+  @include modal-icon;
+  background-color: $color-accent-pink;
+
+  &:hover {
+    border: $border-pink;
+  }
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 5vh;
+  right: 5vw;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
   border: $border-pink;
+  background-color: $font-color-white;
+  color: $color-accent-pink;
   cursor: pointer;
 }
 
-#app {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+.scroll-to-top:hover {
+  box-shadow: $shadow-pink;
 }
-
-// @media (prefers-color-scheme: light) {
-//   :root {
-//     color: #213547;
-//     background-color: #ffffff;
-//   }
-
-//   a:hover {
-//     color: #747bff;
-//   }
-
-//   button {
-//     background-color: #f9f9f9;
-//   }
-// }
 
 .modal-mask {
   position: fixed;
@@ -188,8 +227,12 @@ header .top {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.55);
-  display: flex;
+  @include column;
   transition: opacity 0.3s ease;
+}
+
+.new-post-wrapper {
+  width: 60%;
 }
 
 .modal-container {
@@ -199,7 +242,6 @@ header .top {
   background-color: $bg-color-grey;
   border-radius: 8px;
   border: $border-pink;
-  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   box-shadow: $shadow-pink;
   transition: all 0.3s ease;
 }
@@ -208,7 +250,6 @@ header .top {
   @include row;
   justify-content: center;
   margin-top: 0;
-  // color: $font-color-white;
 }
 
 .modal-body {
@@ -220,25 +261,18 @@ header .top {
   justify-content: space-around;
 }
 
-button {
-  margin: 1em;
-  width: 7em;
-  height: 2em;
-  border-radius: 8px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-}
-
 .modal-button-ok {
+  @include modal-btn-size;
   background-color: $bg-color;
-  border: $bg-color 1px solid;
+  border: $border-grey;
 
   &:hover {
-    border: #0f0f0f 1px solid;
+    border: $border-grey;
   }
 }
 
 .modal-button-cancel {
+  @include modal-btn-size;
   background-color: red;
   border: red 1px solid;
 
@@ -247,25 +281,54 @@ button {
   }
 }
 
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
-
-.modal-enter-from {
-  opacity: 0;
+#app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.modal-leave-to {
-  opacity: 0;
+@media (max-width: 992px) {
+  h1 {
+    font-weight: 600;
+    font-size: 3.5em;
+    line-height: 1;
+  }
+
+  h2 {
+    font-size: 1.7em;
+    line-height: 1;
+  }
+
+  .add-post button {
+    width: 35vw;
+  }
+
+  .posts {
+    width: 80vw;
+  }
 }
 
-.modal-enter-from .modal-container,
-.modal-leave-to .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+@media (max-width: 893px) {
+  .add-post button {
+    width: 40vw;
+  }
+
+  .posts {
+    width: 85vw;
+  }
+}
+
+@media (max-width: 772px) {
+  h1 {
+    font-size: 3em;
+  }
+
+  .add-post button {
+    width: 43vw;
+  }
+
+  .posts {
+    width: 90vw;
+  }
 }

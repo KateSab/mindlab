@@ -1,3 +1,5 @@
+// _mixins.scss
+
 @import "./_variables.scss";
 
 @mixin font-header {
@@ -33,4 +35,44 @@
 @mixin row {
   display: flex;
   flex-direction: row;
+}
+
+@mixin modal-btn-size {
+  width: 7em;
+  height: 2em;
+}
+
+@mixin modal-icon {
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0.4em;
+  border: $border-grey;
+  border-radius: 8px;
+}
+
+@mixin button-base {
+  margin: $spacing;
+  border-radius: $border-radius;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@mixin icon {
+  width: $icon-size;
+  height: $icon-size;
+  background-color: $bg-color;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0.4em;
+  border-radius: $border-radius;
+  border: $bg-color 1px solid;
+}
+
+@mixin icon-hover($border-color) {
+  &:hover {
+    border: 1px solid $border-color;
+  }
 }
