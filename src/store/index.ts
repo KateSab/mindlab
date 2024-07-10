@@ -62,6 +62,7 @@ export const useBlogStore = defineStore('blogStore', {
         if (postIndex !== -1) {
           this.posts[postIndex].title = updatedPost.title;
         }
+        alert('Пост успешно изменен!');
       } catch (error) {
         console.error(error);
         alert('Произошла ошибка при изменении заголовка поста!');
