@@ -19,15 +19,22 @@
   </div>
   <div class="posts">
     <div>
-      <PostItem v-for="post in postsStore.posts" :key="post.id" :post="post" />
+      <PostItem
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+        @edit="editPost"
+      />
     </div>
   </div>
-  <BsArrowUpCircleFill class="scroll-to-top" @click="scrollToTop(30)"/>
-  <!-- <button/> снизу справа для скролла наверх к первому посту -->
+  <BsArrowUpCircleFill
+    class="scroll-to-top"
+    @click="scrollToTop(30)"
+  />
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useBlogStore } from '../store/index';
 import PostItem from '../components/PostItem.vue';
 import ModalAddPost from '../components/ModalAddPost.vue';
@@ -35,6 +42,7 @@ import { AkPlus } from '@kalimahapps/vue-icons';
 import { BsArrowUpCircleFill } from '@kalimahapps/vue-icons';
 
 const postsStore = useBlogStore();
+const posts = computed(() => postsStore.posts);
 const showModal = ref(false);
 
 onMounted(() => {
@@ -47,11 +55,11 @@ const confirmPost = (post) => {
   showModal.value = false;
 };
 
+const editPost = (id, title) => {
+  postsStore.edit_post(id, title);
+};
+
 const scrollToTop = (vh) => {
-  // window.scrollTo({
-  //   top: 250,
-  //   behavior: 'smooth'
-  // });
   const scrollToY = (window.innerHeight * vh) / 100;
 
   window.scrollTo({
@@ -60,7 +68,3 @@ const scrollToTop = (vh) => {
   });
 };
 </script>
-
-<style scoped>
-
-</style>

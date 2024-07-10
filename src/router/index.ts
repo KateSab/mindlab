@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue')
+    name: 'HomeView',
+    component: () => import('../views/HomeView.vue')
   },
   {
     path: '/:pathMatch(.*)*', // Обработчик всех остальных маршрутов

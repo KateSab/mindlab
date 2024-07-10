@@ -1,26 +1,39 @@
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div
+      v-if="show"
+      class="modal-mask"
+    >
       <div class="new-post-wrapper">
         <div class="post-wrapper">
           <div class="post-header">
             <div class="post-author">
-              <img class="avatar" :src="`https://i.pravatar.cc/150?u=23`" alt="Avatar" />
-              <p style="font-weight: 500;">user: 1</p>
+              <img
+                class="avatar"
+                :src="`https://i.pravatar.cc/150?u=23`"
+                alt="Avatar"
+              >
+              <p style="font-weight: 500;">
+                user: 1
+              </p>
             </div>
             <div class="post-actions">
               <AkCheck
-                @click="$emit('confirm', post)" 
-                class="icon-submit"
+                class="icon-submit" 
+                @click="$emit('confirm', post)"
               />
               <CgClose
-                @click="$emit('close')" 
-                class="icon-close"
+                class="icon-close" 
+                @click="$emit('close')"
               />
             </div>
           </div>
           <div class="post-title">
-            <input type="text" v-model="post.title" placeholder="Введите заголовок поста">
+            <input
+              v-model="post.title"
+              type="text"
+              placeholder="Введите заголовок поста"
+            >
           </div>
           <div class="post-body">
             <p>{{ post.body }}</p>

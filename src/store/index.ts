@@ -1,54 +1,71 @@
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-// import axios from 'axios';
+import { defineStore } from 'pinia';
 import { IPost } from '../interfaces/IPost';
 
-export const useBlogStore = defineStore('blogStore', () => {
-  const BASE_URL = 'https://jsonplaceholder.typicode.com';
-  const posts = ref<IPost[]>([]);
+export const useBlogStore = defineStore('blogStore', {
+  state: () => ({
+    BASE_URL: 'https://jsonplaceholder.typicode.com',
+    posts: [] as IPost[],
+  }),
+  actions: {
+    async get_all_posts() {
+      try {
+        const response = await fetch(`${this.BASE_URL}/posts`);
+        const data = await response.json();
+        this.posts = data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
-  async function get_all_posts() {
-    try {
-      const response = await fetch(`${BASE_URL}` + '/posts');
-      const data = await response.json();
-      posts.value = data;
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    async add_post(post: IPost) {
+      try {
+        const response = await fetch(`${this.BASE_URL}/posts`, {
+          method: 'POST',
+          body: JSON.stringify(post),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        });
+        const newPost = await response.json();
+        this.posts.push(newPost);
+        alert('Пост успешно добавлен!');
+      } catch (error) {
+        console.error(error);
+        alert('Произошла ошибка при добавлении поста!');
+      }
+    },
 
-  async function add_post(post: IPost) {
-    try {
-      const response = await fetch(`${BASE_URL}` + '/posts', {
-        method: 'POST',
-        body: JSON.stringify(post),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      });
-      const newPost = await response.json();
-      posts.value.push(newPost);
-      console.log(posts);
+    async delete_post(id: number) {
+      try {
+        await fetch(`${this.BASE_URL}/posts/${id}`, {
+          method: 'DELETE',
+        });
+        this.posts = this.posts.filter(post => post.id !== id);
+        alert('Пост успешно удален!');
+      } catch (error) {
+        console.error(error);
+        alert('Произошла ошибка при удалении поста!');
+      }
+    },
 
-      alert('Пост успешно добавлен!');
-    } catch (error) {
-      console.error(error);
-      alert('Произошла ошибка при добавлении поста!');
-    }
-  }
-
-  async function delete_post(id: number) {
-    try {
-      await fetch(`${BASE_URL}` + `/posts/${id}`, {
-        method: 'DELETE',
-      });
-      alert('Пост успешно удален!');
-      get_all_posts();
-    } catch (error) {
-      console.error(error);
-      alert('Произошла ошибка при удалении поста!');
-    }
-  }
-
-  return { posts, get_all_posts, add_post, delete_post }
-})
+    async edit_post(id: number, title: string) {
+      try {
+        const response = await fetch(`${this.BASE_URL}/posts/${id}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ title }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        });
+        const updatedPost = await response.json();
+        const postIndex = this.posts.findIndex(post => post.id === id);
+        if (postIndex !== -1) {
+          this.posts[postIndex].title = updatedPost.title;
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Произошла ошибка при изменении заголовка поста!');
+      }
+    },
+  },
+});

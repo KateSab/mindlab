@@ -1,19 +1,34 @@
 <template>
   <Transition name="modal">
-    <div v-if="show" class="modal-mask">
+    <div
+      v-if="show"
+      class="modal-mask"
+    >
       <div class="modal-container">
         <div class="modal-header">
-          <slot name="header">default header</slot>
+          <slot name="header">
+            default header
+          </slot>
         </div>
 
         <div class="modal-body">
-          <slot name="body"></slot>
+          <slot name="body" />
         </div>
 
         <div class="modal-footer">
           <slot name="footer">
-            <button class="modal-button-ok" @click="emitConfirm">ОК</button>
-            <button class="modal-button-cancel" @click="$emit('close')">ОТМЕНА</button>
+            <button
+              class="modal-button-ok"
+              @click="emitConfirm"
+            >
+              ОК
+            </button>
+            <button
+              class="modal-button-cancel"
+              @click="$emit('close')"
+            >
+              ОТМЕНА
+            </button>
           </slot>
         </div>
       </div>

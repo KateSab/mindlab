@@ -2,34 +2,42 @@
   <div class="post-wrapper">
     <div class="post-header">
       <div class="post-author">
-        <img class="avatar" :src="`https://i.pravatar.cc/150?u=${post.userId}`" alt="Avatar" />
-        <p style="font-weight: 500;">user: {{ post.userId }}</p>
+        <img
+          class="avatar"
+          :src="`https://i.pravatar.cc/150?u=${post.userId}`"
+          alt="Avatar"
+        >
+        <p style="font-weight: 500;">
+          user: {{ post.userId }}
+        </p>
       </div>
       <div class="post-actions">
-
         <ByEdit 
           v-if="!editMode"
-          @click="editMode=true" 
-          class="icon"
+          class="icon" 
+          @click="editMode=true"
         />
         <AkCheck
           v-else 
-          @click="editMode=false" 
-          class="icon-confirm"
+          class="icon-confirm" 
+          @click="$emit('edit', post.id, editedTitle), editMode = false"
         />
 
         <CaTrashCan 
           v-if="!editMode"
-          @click="showModal = true" 
+          class="icon" 
+          style="color: red;" 
+          @click="showModal = true"
           @confirm="confirmDeletion" 
           @close="showModal = false"
-          class="icon" 
-          style="color: red;"
         />
 
         <Teleport to="body">
-          <!-- use the modal component, pass in the prop -->
-          <ModalConfirm :show="showModal" @close="showModal = false" @confirm="confirmDeletion">
+          <ModalConfirm
+            :show="showModal"
+            @close="showModal = false"
+            @confirm="confirmDeletion"
+          >
             <template #header>
               <h3>Подтвердите удаление поста №{{ post.id }}</h3>
             </template>
@@ -38,8 +46,15 @@
       </div>
     </div>
     <div class="post-title">
-      <h2 v-if="!editMode">{{ post.title }}</h2>
-      <input v-else type="text" v-model="post.title">
+      <h2 v-if="!editMode">
+        {{ post.title }}
+      </h2>
+      
+      <input
+        v-else
+        v-model="editedTitle"
+        type="text"
+      >
     </div>
     <div class="post-body">
       <p>{{ post.body }}</p>
@@ -55,12 +70,6 @@ import { ByEdit } from '@kalimahapps/vue-icons';
 import { AkCheck } from '@kalimahapps/vue-icons';
 import { ref } from 'vue'
 
-const postsStore = useBlogStore();
-
-const showModal = ref(false);
-const editMode = ref(false);
-
-// Определение пропсов, которые принимает компонент
 const props = defineProps({
   post: {
     type: Object,
@@ -68,10 +77,19 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(['edit']);
+
+const postsStore = useBlogStore();
+
+const showModal = ref(false);
+const editMode = ref(false);
+const editedTitle = ref(props.post.title);
+
 const confirmDeletion = () => {
   showModal.value = false;
   postsStore.delete_post(props.post.id);
 };
+
 </script>
 
 <style scoped>
