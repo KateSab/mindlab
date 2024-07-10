@@ -33,6 +33,3 @@ const emitConfirm = () => {
   emit('close');
 };
 </script>
-
-<style scoped>
-</style>
